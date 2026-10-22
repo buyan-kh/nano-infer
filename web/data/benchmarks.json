@@ -1,0 +1,257 @@
+{
+  "recorded_at": "2026-10-22T03:55:46.868218+00:00",
+  "hardware": {
+    "cpu": "Intel(R) Xeon(R) Processor",
+    "vcpu": 4,
+    "ram_gib": 15.63,
+    "device": "cpu",
+    "torch": "2.14.1+cpu",
+    "torch_threads": 4,
+    "dtype": "float32"
+  },
+  "correctness": [
+    {
+      "model": "sshleifer/tiny-gpt2",
+      "prompt_tokens": 16,
+      "max_abs_logit_error": 0.0,
+      "final_token_argmax_match": true,
+      "hf_attention": "eager"
+    },
+    {
+      "model": "distilgpt2",
+      "prompt_tokens": 16,
+      "max_abs_logit_error": 0.0,
+      "final_token_argmax_match": true,
+      "hf_attention": "eager"
+    },
+    {
+      "model": "openai-community/gpt2",
+      "prompt_tokens": 16,
+      "max_abs_logit_error": 0.0,
+      "final_token_argmax_match": true,
+      "hf_attention": "eager"
+    }
+  ],
+  "throughput": {
+    "model": "distilgpt2",
+    "prompt_tokens": 32,
+    "max_new_tokens": 16,
+    "temperature": 0,
+    "requests_per_level": 16,
+    "block_size": 16,
+    "num_blocks": 128,
+    "arrival": "Each wave's requests are submitted together before the first token. Latency includes queue wait inside the wave.",
+    "outputs_match_across_systems": true,
+    "systems": [
+      {
+        "id": "nano-infer",
+        "label": "Paged KV + continuous batching",
+        "levels": [
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 1.709612133000519,
+            "throughput_tps": 149.74156714172213,
+            "ttft_p50_ms": 15.942312999982278,
+            "ttft_p99_ms": 20.30124385015597,
+            "latency_p50_ms": 104.30431399993267,
+            "latency_p99_ms": 127.8929587000789,
+            "concurrency": 1
+          },
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 0.9851755170002434,
+            "throughput_tps": 259.85217413795795,
+            "ttft_p50_ms": 22.230993000107446,
+            "ttft_p99_ms": 26.909268999861524,
+            "latency_p50_ms": 121.97188949994597,
+            "latency_p99_ms": 131.78152784989834,
+            "concurrency": 2
+          },
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 0.7421954540000115,
+            "throughput_tps": 344.92261926464994,
+            "ttft_p50_ms": 37.52193500008616,
+            "ttft_p99_ms": 39.3329815498646,
+            "latency_p50_ms": 185.12876400006917,
+            "latency_p99_ms": 189.5291512000199,
+            "concurrency": 4
+          },
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 0.5583524979997492,
+            "throughput_tps": 458.49172506095783,
+            "ttft_p50_ms": 67.89101949993892,
+            "ttft_p99_ms": 68.32274389995519,
+            "latency_p50_ms": 278.84445599988794,
+            "latency_p99_ms": 279.31361689986716,
+            "concurrency": 8
+          }
+        ]
+      },
+      {
+        "id": "serial_kv",
+        "label": "Serial KV cache",
+        "levels": [
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 1.7453403840004285,
+            "throughput_tps": 146.67626002741775,
+            "ttft_p50_ms": 22.267781999971703,
+            "ttft_p99_ms": 25.7008298501546,
+            "latency_p50_ms": 106.05641099994045,
+            "latency_p99_ms": 112.85470255014616,
+            "concurrency": 1
+          },
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 1.8412401200002932,
+            "throughput_tps": 139.03672705109165,
+            "ttft_p50_ms": 76.29618199996457,
+            "ttft_p99_ms": 152.85363799993092,
+            "latency_p50_ms": 166.81098549997841,
+            "latency_p99_ms": 250.7987237999032,
+            "concurrency": 2
+          },
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 1.9009446749998915,
+            "throughput_tps": 134.66988459304562,
+            "ttft_p50_ms": 198.85110499990333,
+            "ttft_p99_ms": 384.3538561000401,
+            "latency_p50_ms": 292.6651209999136,
+            "latency_p99_ms": 477.7224965999494,
+            "concurrency": 4
+          },
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 1.8690385079999032,
+            "throughput_tps": 136.9688205482459,
+            "ttft_p50_ms": 440.76001749999705,
+            "ttft_p99_ms": 856.6603458998316,
+            "latency_p50_ms": 534.3159799998602,
+            "latency_p99_ms": 946.0417874999052,
+            "concurrency": 8
+          }
+        ]
+      },
+      {
+        "id": "recompute",
+        "label": "Serial recompute",
+        "levels": [
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 4.559480391000534,
+            "throughput_tps": 56.14674876226922,
+            "ttft_p50_ms": 15.96567149999828,
+            "ttft_p99_ms": 18.78416599990942,
+            "latency_p50_ms": 279.1401190000897,
+            "latency_p99_ms": 324.51745249996975,
+            "concurrency": 1
+          },
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 4.48330537199945,
+            "throughput_tps": 57.10072786896289,
+            "ttft_p50_ms": 151.49888250005006,
+            "ttft_p99_ms": 300.9856888001764,
+            "latency_p50_ms": 414.7673070000337,
+            "latency_p99_ms": 576.2791609001397,
+            "concurrency": 2
+          },
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 4.4641965379998965,
+            "throughput_tps": 57.34514549726707,
+            "ttft_p50_ms": 443.2733135000717,
+            "ttft_p99_ms": 866.8767708500695,
+            "latency_p50_ms": 703.6772765000023,
+            "latency_p99_ms": 1122.8917862500452,
+            "concurrency": 4
+          },
+          {
+            "requests": 16,
+            "generated_tokens": 256,
+            "wall_s": 4.398157704999903,
+            "throughput_tps": 58.20618931171447,
+            "ttft_p50_ms": 977.5292809999883,
+            "ttft_p99_ms": 1954.4486162499766,
+            "latency_p50_ms": 1236.9341835000114,
+            "latency_p99_ms": 2210.9407989000033,
+            "concurrency": 8
+          }
+        ]
+      }
+    ]
+  },
+  "memory": {
+    "model": "distilgpt2",
+    "block_size": 16,
+    "num_blocks": 20,
+    "slot_budget": 320,
+    "prompt_tokens": 32,
+    "max_new_tokens": 32,
+    "requests": 8,
+    "note": "Each sequence needs 32 prompt tokens plus 32 generated tokens (64 tokens, 4 blocks). The pool has 20 blocks, so a full reservation of 4 blocks admits 5 sequences; paging admits on the 2-block prompt and grows.",
+    "systems": [
+      {
+        "requests": 8,
+        "generated_tokens": 256,
+        "wall_s": 0.9726983630000632,
+        "throughput_tps": 263.18539203708247,
+        "ttft_p50_ms": 68.21240100009618,
+        "ttft_p99_ms": 68.47917998014054,
+        "latency_p50_ms": 741.9537765000541,
+        "latency_p99_ms": 972.6397397000368,
+        "id": "paged",
+        "max_running": 8,
+        "label": "Paged incremental"
+      },
+      {
+        "requests": 8,
+        "generated_tokens": 256,
+        "wall_s": 0.6465944520000448,
+        "throughput_tps": 395.92050195936764,
+        "ttft_p50_ms": 46.85102500002358,
+        "ttft_p99_ms": 417.0621125798493,
+        "latency_p50_ms": 382.959511499962,
+        "latency_p99_ms": 646.534792729974,
+        "id": "reserve",
+        "max_running": 5,
+        "label": "Up-front reservation"
+      }
+    ]
+  },
+  "speculative": {
+    "target": "openai-community/gpt2",
+    "draft": "distilgpt2",
+    "gamma": 4,
+    "prompt_tokens": 32,
+    "max_new_tokens": 32,
+    "temperature": 0,
+    "greedy_match": true,
+    "generated_tokens": 32,
+    "target_only_wall_s": 0.4115405139998529,
+    "speculative_wall_s": 0.5660422070000095,
+    "target_only_tps": 77.75662155102289,
+    "speculative_tps": 56.532886778175296,
+    "proposed": 28,
+    "accepted_draft": 24,
+    "rounds": 8,
+    "emitted": 32,
+    "acceptance_rate": 0.8571428571428571,
+    "mean_emitted_per_round": 4.0
+  },
+  "elapsed_s": 39.75628100199992
+}
