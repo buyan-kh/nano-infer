@@ -6,7 +6,7 @@ These are the decisions behind nano-infer, in the order a design review tends to
 
 The serving problem (paging, admission, preemption, speculation) is architecture-agnostic. The correctness problem is not. GPT-2 has a public reference implementation and small public weights, so a from-scratch forward pass can be checked token by token. A Llama-shaped model would add RoPE, grouped-query attention, SwiGLU, and RMSNorm. Those change the math inside the block. They do not change the block table, the scheduler, or the HTTP loop. Shipping GPT-2 first means a logit mismatch is a bug in this code, not an ambiguity about which kernel Hugging Face selected.
 
-`weights/tiny-gpt2` is sshleifer/tiny-gpt2 (width 2, 2 layers, 2 heads, vocab 50257). It is vendored so the logit test does not need a download. It is the wrong model for throughput. Throughput and the memory-pressure run use distilgpt2. Speculative decoding uses openai-community/gpt2 as the target and distilgpt2 as the draft, because the draft was distilled from GPT-2 and therefore accepts often.
+`weights/tiny-gpt2` is sshleifer/tiny-gpt2 (width 2, 2 layers, 2 heads, vocab 50257). It is not committed; it is downloaded from the hub into weights/ on first use. It is the wrong model for throughput. Throughput and the memory-pressure run use distilgpt2. Speculative decoding uses openai-community/gpt2 as the target and distilgpt2 as the draft, because the draft was distilled from GPT-2 and therefore accepts often.
 
 ## Forward pass
 

@@ -13,3 +13,4 @@ web/.next/
 web/out/
 .DS_Store
 *.log
+weights/
