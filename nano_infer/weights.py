@@ -70,9 +70,30 @@ def _load_tensors(path: Path) -> dict[str, torch.Tensor]:
     return loaded
 
 
+ROOT = Path(__file__).resolve().parent.parent
+TINY_DIR = ROOT / "weights" / "tiny-gpt2"
+TINY_REPO = "sshleifer/tiny-gpt2"
+
+
+def ensure_tiny_checkpoint() -> Path:
+    """Return weights/tiny-gpt2, downloading it from the hub if absent."""
+    if not (TINY_DIR / "config.json").exists():
+        os.environ.setdefault("HF_HUB_DISABLE_XET", "1")
+        from huggingface_hub import snapshot_download
+
+        snapshot_download(
+            repo_id=TINY_REPO,
+            local_dir=str(TINY_DIR),
+            allow_patterns=["config.json", "model.safetensors", "pytorch_model.bin"],
+        )
+    return TINY_DIR
+
+
 def resolve_checkpoint(source: str | Path) -> Path:
     """Return a directory that contains `config.json` and a weight file."""
     path = Path(source)
+    if path.as_posix().rstrip("/").endswith("weights/tiny-gpt2"):
+        return ensure_tiny_checkpoint()
     if path.exists():
         if path.is_file():
             return path.parent

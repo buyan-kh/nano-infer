@@ -84,13 +84,16 @@ def test_batched_decode_matches_solo_sequences():
 
 
 def test_real_tiny_gpt2_matches_huggingface():
-    config, model = load_model("weights/tiny-gpt2")
+    from nano_infer.weights import ensure_tiny_checkpoint
+
+    tiny = ensure_tiny_checkpoint()
+    config, model = load_model(tiny)
     assert config.vocab_size == 50257
     assert config.n_layer == 2
     assert config.n_embd == 2
     from transformers import GPT2LMHeadModel
 
-    hf = GPT2LMHeadModel.from_pretrained("weights/tiny-gpt2", attn_implementation="eager")
+    hf = GPT2LMHeadModel.from_pretrained(str(tiny), attn_implementation="eager")
     hf.eval()
     tokens = [15496, 11, 995, 0, 50256, 15, 88, 318, 257, 1664, 649, 198]
     ours = prefill_logits(model, tokens, block_size=8)

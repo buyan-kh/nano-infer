@@ -39,7 +39,7 @@ GPT2 = Path(
         "/home/ubuntu/.cache/huggingface/hub/models--openai-community--gpt2/snapshots",
     )
 )
-TINY = ROOT / "weights" / "tiny-gpt2"
+from nano_infer.weights import TINY_DIR as TINY  # noqa: E402
 
 PROMPT_TOKENS = 32
 NEW_TOKENS = 16
