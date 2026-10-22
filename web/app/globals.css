@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --background: #10140f;
+  --foreground: #e7ecdf;
+  --panel: #181d17;
+  --panel-2: #21281f;
+  --line: #2e3629;
+  --muted: #9aa592;
+  --amber: #e6a15c;
+  --mint: #8fd6b4;
+  --coral: #e07a6a;
+  --sky: #7eb6d9;
+  --plum: #d58bd0;
+  --ink: #10140f;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-amber: var(--amber);
+  --color-mint: var(--mint);
+  --color-coral: var(--coral);
+  --color-sky: var(--sky);
+  --color-plum: var(--plum);
+  --color-ink: var(--ink);
+  --font-sans: var(--font-plex);
+  --font-mono: var(--font-plex-mono);
+  --font-display: var(--font-fraunces);
+}
+
+body {
+  background:
+    radial-gradient(900px 420px at 0% -10%, rgba(230, 161, 92, 0.09), transparent 55%),
+    radial-gradient(700px 380px at 100% 0%, rgba(143, 214, 180, 0.07), transparent 50%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-plex), sans-serif;
+}
+
+.recharts-cartesian-grid line {
+  stroke: #2e3629;
+}
